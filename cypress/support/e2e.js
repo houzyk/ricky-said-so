@@ -18,3 +18,10 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+Cypress.on("fail", (err) => {
+  if (err.message.includes("submittedURLShouldFail")) {
+    return true;
+  } else {
+    throw err;
+  }
+})
