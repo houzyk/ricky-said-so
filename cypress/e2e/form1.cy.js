@@ -1,33 +1,40 @@
+const getData = (elements) => {
+  return elements[Math.floor(Math.random() * elements.length)];
+}
+
 describe('Form 1 Automation', () => {
   
   it('Correct Input - Fills The Form -> Triggers Alert -> Sends GET Response', async () => {
-    const data = await cy.fixture("form1");
+    const {url, interactions, expectations} = await cy.fixture("form1");
 
-    cy.visit(data.url);
-
-    const emailField = cy.get(data.interactions.emailField.selector);
-    emailField.type(data.interactions.emailField.input);
-
-    const passwordField = cy.get(data.interactions.passwordField.selector);
-    passwordField.type(data.interactions.passwordField.input);
-
-    const checkBoxField = cy.get(data.interactions.checkBoxField.selector);
-    checkBoxField.check();
+    const email = getData(interactions.emailField.correctInputs);
+    const password = getData(interactions.passwordField.correctInputs);
 
     cy.intercept({
-      url: `${data.url}*`,
+      url: `${url}*`,
       method: 'GET',
       query: { 
-        email: data.interactions.emailField.input,
-        password: data.interactions.passwordField.input
+        email,
+        password
       },
     }).as('matchingSubmittedURL');
 
-    const formSubmitButton = cy.get(data.interactions.formSubmitButton.selector);
+    cy.visit(url);
+
+    const emailField = cy.get(interactions.emailField.selector);
+    emailField.type(email);
+
+    const passwordField = cy.get(interactions.passwordField.selector);
+    passwordField.type(password);
+
+    const checkBoxField = cy.get(interactions.checkBoxField.selector);
+    checkBoxField.check();
+
+    const formSubmitButton = cy.get(interactions.formSubmitButton.selector);
     formSubmitButton.click();
 
     cy.on("window:alert", (alertText) => {
-      expect(alertText).to.contain(data.expectations.onFormSubmit.alertText);
+      expect(alertText).to.contain(expectations.onFormSubmit.alertText);
     });
 
     cy.wait('@matchingSubmittedURL');

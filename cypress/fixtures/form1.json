@@ -3,11 +3,11 @@
   "interactions": {
     "emailField": {
       "selector": "#email",
-      "input": "hello@gmail.com"
+      "correctInputs": ["hello@gmail.com", "test@test.ok.com", "test@test.co.uk"]
     },
     "passwordField": {
       "selector": "#password",
-      "input": "Testing123"
+      "correctInputs": ["Testing123", "testing123!", "!!@$TestTTT1"]
     },
     "checkBoxField": {
       "selector": "#exampleCheck1"
