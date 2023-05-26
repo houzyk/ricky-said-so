@@ -1,0 +1,24 @@
+{
+  "url": "https://hangarwww.gitlab.io/qa/form-1",
+  "interactions": {
+    "emailField": {
+      "selector": "#email",
+      "input": "hello@gmail.com"
+    },
+    "passwordField": {
+      "selector": "#password",
+      "input": "Testing123"
+    },
+    "checkBoxField": {
+      "selector": "#exampleCheck1"
+    },
+    "formSubmitButton": {
+      "selector": "form > button[type=submit]"
+    }
+  },
+  "expectations": {
+    "onFormSubmit": {
+      "alertText": "Well Done!"
+    }
+  }
+}
